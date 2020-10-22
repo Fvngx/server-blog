@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { ArticleController } from './article.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from '../auth/auth.module';
+import { UserModule } from '../user/user.module';
 import { ArticleService } from './article.service';
-import { TypeOrmModule } from '@nestjs/typeorm'
-import { AuthModule } from '../auth/auth.module'
-import { UserModule } from '../user/user.module'
-import { TagModule } from '../tag/tag.module'
-import { CategoryModule } from '../category/category.module'
-import { Article } from './article.entity'
+import { TagModule } from '../tag/tag.module';
+import { CategoryModule } from '../category/category.module';
+import { ArticleController } from './article.controller';
+import { Article } from './article.entity';
 
 @Module({
   imports: [
@@ -16,7 +16,8 @@ import { Article } from './article.entity'
     UserModule,
     AuthModule,
   ],
+  exports: [ArticleService],
+  providers: [ArticleService],
   controllers: [ArticleController],
-  providers: [ArticleService]
 })
 export class ArticleModule {}

@@ -7,5 +7,11 @@ export const config = {
     password: 'X123456ing.',
     database: 'blog',
     charset: 'utf8mb4',
+  },
+  smtp: {
+    host: '',
+    port: '',
+    user: '',
+    pass: '',
   }
 }
