@@ -11,6 +11,13 @@ import { UserModule } from './modules/user/user.module';
 import { ViewModule } from './modules/view/view.module';
 
 import { User } from './modules/user/user.entity'
+import { Article } from './modules/article/article.entity'
+import { Category } from './modules/category/category.entity'
+import { Comment } from './modules/comment/comment.entity'
+import { Search } from './modules/search/search.entity'
+import { SMTP } from './modules/smtp/smtp.entity'
+import { Tag } from './modules/tag/tag.entity'
+import { View } from './modules/view/view.entity'
 
 import {config} from './config'
 
@@ -21,6 +28,13 @@ import {config} from './config'
       ...config.mysql,
       entities: [
         User,
+        Article,
+        Category,
+        Comment,
+        Search,
+        SMTP,
+        Tag,
+        View,
       ],
       synchronize: true,
     }),
