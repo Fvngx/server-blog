@@ -1,6 +1,4 @@
-import { rejects } from 'assert';
 import nodemailer from 'nodemailer'
-import { resolve } from 'path';
 
 export const sendEmail = (message, {host, port, user, pass}) => {
   if (!host || !port || !user || !pass) {

@@ -13,5 +13,6 @@ export const config = {
     port: '',
     user: '',
     pass: '',
+    from: '',
   }
 }
