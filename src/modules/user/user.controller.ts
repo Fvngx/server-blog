@@ -13,11 +13,14 @@ import {
   Query,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt'
+import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { User } from './user.entity'
 import { UserService } from './user.service'
+import * as userSwager from './user.swagger'
 
 @Controller('user')
+@ApiTags('用户')
 export class UserController {
   constructor(
     private readonly userService: UserService,
@@ -31,7 +34,7 @@ export class UserController {
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(JwtAuthGuard)
   @Get()
-  findAll(@Query() query) {
+  findAll(@Query() query: userSwager.findUsers) {
     return this.userService.findAll(query)
   }
 
@@ -42,7 +45,7 @@ export class UserController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
-  async register(@Body() user: Partial<User>): Promise<User> {
+  async register(@Body() user: userSwager.registerUser): Promise<User> {
     return await this.userService.createUser(user)
   }
 
@@ -68,7 +71,7 @@ export class UserController {
     }
 
     const exist = await this.userService.findById(id)
-    if (exist.id !== id) {
+    if (exist.id !== user.id) {
       throw new HttpException('无权处理', HttpStatus.FORBIDDEN)
     }
   }
@@ -81,7 +84,7 @@ export class UserController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('update')
   @HttpCode(HttpStatus.CREATED)
-  async update(@Request() req, @Body() user: Partial<User>): Promise<User> {
+  async update(@Request() req, @Body() user: userSwager.updateUser): Promise<User> {
     await this.checkPermission(req, user)
     return await this.userService.updateById(user.id, user)
   }
@@ -89,7 +92,7 @@ export class UserController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('updatePassword')
   @HttpCode(HttpStatus.CREATED)
-  async updatePassword(@Request() req, @Body() user: Partial<User>): Promise<User> {
+  async updatePassword(@Request() req, @Body() user: userSwager.updatePass): Promise<User> {
     await this.checkPermission(req, user)
     return await this.userService.updatePassword(user.id, user)
   }
