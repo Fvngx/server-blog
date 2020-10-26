@@ -29,7 +29,6 @@ export class UserController {
    * @param query 
    */
   @UseInterceptors(ClassSerializerInterceptor)
-  @UseGuards(JwtAuthGuard)
   @Get()
   findAll(@Query() query) {
     return this.userService.findAll(query)
@@ -81,6 +80,7 @@ export class UserController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('update')
   @HttpCode(HttpStatus.CREATED)
+  @UseGuards(JwtAuthGuard)
   async update(@Request() req, @Body() user: Partial<User>): Promise<User> {
     await this.checkPermission(req, user)
     return await this.userService.updateById(user.id, user)
@@ -89,6 +89,7 @@ export class UserController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('updatePassword')
   @HttpCode(HttpStatus.CREATED)
+  @UseGuards(JwtAuthGuard)
   async updatePassword(@Request() req, @Body() user: Partial<User>): Promise<User> {
     await this.checkPermission(req, user)
     return await this.userService.updatePassword(user.id, user)
