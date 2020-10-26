@@ -43,7 +43,7 @@ export class ViewService {
     const query = this.viewRepository
       .createQueryBuilder('view')
       .orderBy('view.create_at', 'DESC')
-    const { page=1, pageSize=12, pass, ...otherParams } = queryParams
+    const { page=1, pageSize=12, ...otherParams } = queryParams
 
     query.skip((+page-1) * pageSize)
     query.take(+pageSize)

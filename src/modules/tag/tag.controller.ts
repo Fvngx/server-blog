@@ -4,16 +4,20 @@ import {
   Get,
   Patch,
   Delete,
-  Body,
   Param,
+  Body,
+  UseGuards,
   Query,
-  UseGuards
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { TagService } from './tag.service'
-import * as swagger from './tag.swagger' 
+import { Tag } from './tag.entity'
+import * as swagger from './tag.swagger'
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('tag')
+@ApiTags('标签')
+@UseGuards(JwtAuthGuard)
 export class TagController {
   constructor(private readonly tagService: TagService) {}
 
@@ -22,7 +26,6 @@ export class TagController {
    * @param tag 
    */
   @Post()
-  @UseGuards(JwtAuthGuard)
   create(@Body() tag: swagger.tag) {
     return this.tagService.create(tag)
   }
@@ -32,7 +35,7 @@ export class TagController {
    * @param queryParams 
    */
   @Get()
-  findAll(@Query() queryParams:swagger.query) {
+  findAll(@Query() queryParams: swagger.findTags): Promise<Tag[]> {
     return this.tagService.findAll(queryParams)
   }
 
@@ -41,17 +44,17 @@ export class TagController {
    * @param id 
    */
   @Get(':id')
-  findById(@Param('id') id:swagger.tagId) {
+  findById(@Param('id') id) {
     return this.tagService.findById(id)
   }
 
   /**
-   * 获取指定文章，包含的文章
+   * 获取指定标签，包含的文章
    * @param id 
    * @param status 
    */
-  @Get(':id/articles')
-  getArticlesById(@Param('id') id: swagger.tagId, @Query('status') status) {
+  @Get(':id/article')
+  getArticleById(@Param('id') id, @Query('status') status: swagger.articlesById) {
     return this.tagService.getArticleById(id, status)
   }
 
@@ -61,18 +64,16 @@ export class TagController {
    * @param tag 
    */
   @Patch(':id')
-  @UseGuards(JwtAuthGuard)
-  updateById(@Param('id') id: swagger.tagId, @Body() tag: swagger.tag) {
+  updateById(@Param('id') id, @Body() tag: swagger.updateTag) {
     return this.tagService.updateById(id, tag)
   }
 
   /**
-   * 删除指定标签
+   * 删除标签
    * @param id 
    */
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
-  deleteById(@Param('id') id: swagger.tagId) {
+  deleteById(@Param('id') id) {
     return this.tagService.deleteById(id)
   }
 }

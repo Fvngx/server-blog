@@ -6,12 +6,11 @@ import * as helmet from 'helmet'
 import { TransformInterceptor } from './interceptors/transform.interceptor'
 import { HttpExceptionFilter } from './filters/http-exception.filter'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
-import { doc } from 'prettier';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors()
-  // app.setGlobalPrefix()
+  app.setGlobalPrefix('api')
   app.use(
     rateLimit({
       windowMs: 60 * 1000, // 1 minutes

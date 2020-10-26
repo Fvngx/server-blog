@@ -9,7 +9,7 @@ import { JwtStrategy } from './jwt.strategy'
 
 const passModule = PassportModule.register({defaultStrategy: 'jwt'})
 const jwtModule = JwtModule.register({
-  secret: 'starKey',
+  secret: 'starkey',
   signOptions: {expiresIn: '4h'}
 })
 
