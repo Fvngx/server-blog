@@ -37,7 +37,7 @@ export class SearchService {
       const count = exist.count
       const newData = await this.searchRepository.merge(exist, {
         count: count + 1
-      })
+      } as any)
       await this.searchRepository.save(newData)
       return newData
     }
