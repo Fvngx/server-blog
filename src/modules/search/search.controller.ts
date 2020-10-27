@@ -6,11 +6,13 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { SearchService } from './search.service'
 import * as swagger from './search.swagger'
 
 @Controller('search')
+@ApiTags('搜索')
 export class SearchController {
   constructor(private readonly searchService: SearchService) {}
 

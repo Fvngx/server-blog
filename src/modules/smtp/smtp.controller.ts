@@ -8,11 +8,13 @@ import {
   Param,
   UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { SmtpService } from './smtp.service'
 import * as swagger from './smtp.swagger'
 
 @Controller('smtp')
+@ApiTags('邮箱')
 export class SmtpController {
   constructor(private readonly smtpService: SmtpService) {}
 

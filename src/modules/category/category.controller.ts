@@ -13,8 +13,10 @@ import {
  import { CategoryService } from './category.service'
  import { Category } from './category.entity'
  import * as swagger from './categor.swagger'
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('category')
+@ApiTags('分类')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
