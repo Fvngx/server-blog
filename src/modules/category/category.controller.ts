@@ -53,7 +53,7 @@ export class CategoryController {
    */
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
-  updateById(@Param('id') id: swagger.categoryId, @Body() category: swagger.category) {
+  updateById(@Param('id') id: swagger.categoryId, @Body() category: swagger.updateCategory) {
     return this.categoryService.updateById(id, category)
   }
 
